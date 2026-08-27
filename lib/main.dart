@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'EnCorto Demo',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.purple),
+        colorScheme: .fromSeed(seedColor: Color.fromARGB(255, 255, 223, 0)),
         textTheme: GoogleFonts.plusJakartaSansTextTheme(
           Theme.of(context).textTheme,
         ),
