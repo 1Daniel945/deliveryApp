@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,59 +10,65 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<(String, String)> categoryList = [
-    ('Pizzas', 'https://i.ibb.co/nMn7WhTC/pizza-Cartoon.png'), 
+    ('Pizzas', 'https://i.ibb.co/nMn7WhTC/pizza-Cartoon.png'),
     ('Hamburgesas', 'https://i.ibb.co/pBq9pqtX/Hamburgesa-Cartoon.png'),
-    ('Tacos', 'https://i.ibb.co/VW77KdNp/Tacos-Cartoon.png'), 
+    ('Tacos', 'https://i.ibb.co/VW77KdNp/Tacos-Cartoon.png'),
     ('Botanas', 'https://i.ibb.co/9mV7cCQd/Botanas-Cartoon.png'),
-    ('Sushi','https://i.ibb.co/fd8gHprD/Sushi-Cartoon.png'), 
-    ('Farmacias', 'https://i.ibb.co/67GyxT0V/farmacia-Cartoon.jpg')
+    ('Sushi', 'https://i.ibb.co/fd8gHprD/Sushi-Cartoon.png'),
+    ('Farmacias', 'https://i.ibb.co/67GyxT0V/farmacia-Cartoon.jpg'),
   ];
   String selectedCategory = 'Promociones';
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 40, 44, 52),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 255, 223, 0),
         elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Entrega en',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: .bold,
-              ),
-            ),
-            const Row(
-              children: [
-                Text(
-                  'Mi Direccion Actual #123',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: .normal,
+        title: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Entrega en',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: .bold,
+                    ),
                   ),
-                ),
-                Icon(Icons.keyboard_arrow_down, color: Colors.black,)
-              ],
-            ),
-          ],
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Mi Direccion Actual #123',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: .normal,
+                    ),
+                  ),
+                  Icon(Icons.keyboard_arrow_down),
+                  //IconButton(onPressed: () {}, icon: Icon(Icons.keyboard_arrow_down))
+                ],
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart, color: Colors.black,),
-            onPressed: () {
-
-            },
+            icon: const Icon(Icons.shopping_cart, color: Colors.black),
+            onPressed: () {},
           ),
         ],
       ),
-      body: Stack( 
+      body: Stack(
         children: [
           SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 50),
@@ -83,19 +90,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       decoration: InputDecoration(
                         hintText: '¿Qué se te antoja hoy?',
-                        hintStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                        prefixIcon: Icon(
-                          Icons.search, 
-                          color: Colors.white,
-                        ),
+                        hintStyle: TextStyle(color: Colors.white),
+                        prefixIcon: Icon(Icons.search, color: Colors.white),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(100)),
                         ),
-                        contentPadding: EdgeInsets.symmetric(vertical: 12)
+                        contentPadding: EdgeInsets.symmetric(vertical: 12),
                       ),
-
                     ),
                   ),
                 ),
@@ -110,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 110,
                   child: SingleChildScrollView(
@@ -125,10 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           isSelected: isSelected,
                           onTap: () {
                             setState(() {
-                              if(selectedCategory == category.$1) {
+                              if (selectedCategory == category.$1) {
                                 selectedCategory = 'Promociones';
-                              }
-                              else {
+                              } else {
                                 selectedCategory = category.$1;
                               }
                             });
@@ -149,9 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(255, 255, 223, 0),
-                        ), 
+                        ),
                       ),
-                      const SizedBox(height: 20,),
+                      const SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.all(0),
                         child: SingleChildScrollView(
@@ -249,7 +249,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              CustomCard(),
                             ],
                           ),
                         ),
@@ -257,10 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                Divider(
-                  indent: 10,
-                  endIndent: 10,
-                ),
+                Divider(indent: 10, endIndent: 10),
                 Column(
                   children: [
                     Container(
@@ -277,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Colors.white,
                                 ),
                               ),
-                              if(isLandScape) const Spacer(),
+                              if (isLandScape) const Spacer(),
                               Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 size: 16,
@@ -285,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(height: 20),
                           SizedBox(
                             child: SingleChildScrollView(
                               scrollDirection: .horizontal,
@@ -307,10 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Divider(
-                  indent: 10,
-                  endIndent: 10,
-                ),
+                Divider(indent: 10, endIndent: 10),
                 Column(
                   children: [
                     Container(
@@ -327,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Colors.white,
                                 ),
                               ),
-                              if(isLandScape) const Spacer(),
+                              if (isLandScape) const Spacer(),
                               Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 size: 16,
@@ -335,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20,),
+                          SizedBox(height: 20),
                           SizedBox(
                             child: SingleChildScrollView(
                               scrollDirection: .horizontal,
@@ -361,36 +354,56 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           //Activar la barra inferior solo cuando el teclado esta oculto
-          if(MediaQuery.of(context).viewInsets.bottom == 0) 
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  currentIndex: selectedIndex,
-                  backgroundColor: Color.fromARGB(255, 255, 223, 0),
-                  elevation: 0,
-                  selectedItemColor: Color.fromARGB(255, 218, 165, 32),
-                  unselectedItemColor: Colors.black,
-                  onTap: (index) {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                  items: [      
-                    BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '', activeIcon: Icon(Icons.home_filled)),
-                    BottomNavigationBarItem(icon: Icon(Icons.favorite_border_outlined), label: '', activeIcon: Icon(Icons.favorite_outlined)),
-                    BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: '', activeIcon: Icon(Icons.person)),
-                  ],
+          if (MediaQuery.of(context).viewInsets.bottom == 0)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: BottomNavigationBar(
+                    type: BottomNavigationBarType.fixed,
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    currentIndex: selectedIndex,
+                    backgroundColor: Color.fromARGB(255, 255, 223, 0),
+                    elevation: 0,
+                    selectedItemColor: Color.fromARGB(255, 218, 165, 32),
+                    unselectedItemColor: Colors.black,
+                    onTap: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                      switch (index) {
+                        case 0:
+                          context.go('/');
+                          break;
+                        case 1:
+                          context.go('/favorite');
+                          break;
+                      }
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home_outlined),
+                        label: '',
+                        activeIcon: Icon(Icons.home_filled),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite_border_outlined),
+                        label: 'favorite',
+                        activeIcon: Icon(Icons.favorite_outlined),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.person_2_outlined),
+                        label: '',
+                        activeIcon: Icon(Icons.person),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ), 
-          ),
+            ),
         ],
       ),
     );
@@ -398,10 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class CustomCard extends StatelessWidget {
-
-  const CustomCard({
-    super.key,
-  });
+  const CustomCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -451,20 +461,24 @@ class CustomCard extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: .bold,
                       backgroundColor: Colors.lightGreen,
-                      shadows: [Shadow(
-                        blurRadius: BorderSide.strokeAlignCenter,
-                        color: Colors.amber,
-                        offset: Offset.infinite,
-                      )]
+                      shadows: [
+                        Shadow(
+                          blurRadius: BorderSide.strokeAlignCenter,
+                          color: Colors.amber,
+                          offset: Offset.infinite,
+                        ),
+                      ],
                     ),
                   ),
                   Text(
                     '\$255',
                     style: TextStyle(
                       decoration: .lineThrough,
+                      decorationColor: Colors.white,
+                      decorationThickness: 2,
                       color: Colors.grey,
                     ),
-                  ),  
+                  ),
                 ],
               ),
               Row(
@@ -482,7 +496,7 @@ class CustomCard extends StatelessWidget {
                     ],
                   ),
                 ],
-              ),  
+              ),
             ],
           ),
         ],
@@ -492,7 +506,6 @@ class CustomCard extends StatelessWidget {
 }
 
 class CategoryItem extends StatelessWidget {
-  
   final String url, title;
   final bool isSelected;
   final VoidCallback onTap;
@@ -522,9 +535,13 @@ class CategoryItem extends StatelessWidget {
                 padding: const EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: isSelected ? Color.fromARGB(255, 255, 223, 0) : Colors.transparent,
+                  color: isSelected
+                      ? Color.fromARGB(255, 255, 223, 0)
+                      : Colors.transparent,
                   border: Border.all(
-                    color: isSelected ? Color.fromARGB(255, 218, 165, 32) : Colors.transparent,
+                    color: isSelected
+                        ? Color.fromARGB(255, 218, 165, 32)
+                        : Colors.transparent,
                     width: 2,
                   ),
                 ),
@@ -538,19 +555,21 @@ class CategoryItem extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 6,),
+              const SizedBox(height: 6),
               Text(
                 title,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: isSelected ? .bold : .normal,
-                  color: isSelected ? Color.fromARGB(255, 255, 223, 0) : Colors.white,
+                  color: isSelected
+                      ? Color.fromARGB(255, 255, 223, 0)
+                      : Colors.white,
                 ),
               ),
             ],
           ),
         ),
-      ), 
+      ),
     );
   }
 }
