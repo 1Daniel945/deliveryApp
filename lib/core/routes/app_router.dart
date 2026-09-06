@@ -1,7 +1,8 @@
+import 'package:flutter_application_1/features/home/profilescreen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/home/homescreen.dart';
-import '../../features/home/favoritesScreen.dart';
+import '../../features/home/favoritesscreen.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -14,6 +15,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/favorite',
         builder: (context, state) => const FavoritesScreen(),
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const Profilescreen(),
       ),
     ],
   );
