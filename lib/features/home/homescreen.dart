@@ -21,11 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 40, 44, 52),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 255, 223, 0),
         elevation: 0,
         title: Container(
@@ -376,17 +376,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                       switch (index) {
                         case 0:
-                          context.go('/');
+                          if(context.canPop()) {
+                            context.pop();
+                          }
                           break;
                         case 1:
-                          context.go('/favorite');
+                          context.push('/favorite');
                           break;
                       }
                     },
                     items: [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.home_outlined),
-                        label: '',
+                        label: 'Home',
                         activeIcon: Icon(Icons.home_filled),
                       ),
                       BottomNavigationBarItem(
