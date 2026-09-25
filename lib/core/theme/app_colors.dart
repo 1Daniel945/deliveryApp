@@ -9,5 +9,7 @@ class AppColors {
   static const success = Color(0xFF55D85A);
   static const textPrimary = Color(0xFF000000);
   static const textSecondary = Color(0xFF8D8880);
+  static const textThird = Color.fromARGB(255, 242, 240, 240);
   static const border = Color(0xFF545454);
+  static const optional = Color.fromARGB(255, 218, 165, 32);
 }

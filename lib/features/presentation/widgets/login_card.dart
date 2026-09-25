@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
+import 'package:go_router/go_router.dart';
 
-class LoginCard extends StatelessWidget {
+class LoginCard extends StatefulWidget {
   const LoginCard({
     super.key,
     required this.textControllerUser,
@@ -11,6 +12,13 @@ class LoginCard extends StatelessWidget {
   final TextEditingController textControllerUser;
   final TextEditingController textControllerPass;
 
+  @override
+  State<LoginCard> createState() => _LoginCardState();
+}
+
+class _LoginCardState extends State<LoginCard>{
+  bool hidePass = true;
+  Icon ico = Icon(Icons.visibility);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +33,7 @@ class LoginCard extends StatelessWidget {
         mainAxisSize: .min,
         children: [
           TextField(
-            controller: textControllerUser,
+            controller: widget.textControllerUser,
             decoration: InputDecoration(
               hintText: 'Ingresa tu usuario',
               prefixIcon: Icon(Icons.person, color: AppColors.primary),
@@ -33,20 +41,28 @@ class LoginCard extends StatelessWidget {
           ),
           SizedBox(height: 16),
           TextField(
-            controller: textControllerPass,
+            controller: widget.textControllerPass,
             decoration: InputDecoration(
               hintText: 'Ingresa tu contraseña',
               prefixIcon: Icon(Icons.lock, color: AppColors.primary),
               suffixIcon: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.remove_red_eye),
+                onPressed: () {
+                  setState(() {
+                    hidePass = !hidePass;
+                    ico = Icon(Icons.visibility_off);
+                  });
+                },
+                icon: ico,
                 color: AppColors.primary,
               ),
             ),
+            obscureText: hidePass,
           ),
           SizedBox(height: 16),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              context.push('/home');
+            },
             borderRadius: .circular(12),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

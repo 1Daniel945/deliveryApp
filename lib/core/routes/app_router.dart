@@ -1,4 +1,6 @@
 import 'package:flutter_application_1/features/home/profiles_screen.dart';
+import 'package:flutter_application_1/features/presentation/screens/payment_screen.dart';
+import 'package:flutter_application_1/features/presentation/screens/login_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/restaurant_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +13,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const RestaurantScreen(),
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
         path: '/favorite',
@@ -20,6 +26,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/profile',
         builder: (context, state) => const Profilescreen(),
+      ),
+      GoRoute(
+        path: '/restaurantScreen',
+        builder: (context, state) => const RestaurantScreen(),
+      ),
+      GoRoute(
+        path: '/payment',
+        builder: (context, state) => const PaymentScreen(),
       ),
     ],
   );

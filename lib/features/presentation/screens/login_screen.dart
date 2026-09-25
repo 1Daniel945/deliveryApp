@@ -22,7 +22,10 @@ class LoginScreen extends ConsumerWidget {
               crossAxisAlignment: .center,
               children: [
                 Image.network('https://i.ibb.co/twWSbVKh/Gemini-Generated-Image.png'),
-                LoginCard(textControllerUser: textControllerUser, textControllerPass: textControllerPass),
+                LoginCard(
+                  textControllerUser: textControllerUser, 
+                  textControllerPass: textControllerPass,
+                ),
               ],
             ),
           ),
