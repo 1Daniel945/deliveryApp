@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/presentation/widgets/login_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,6 +11,7 @@ class LoginScreen extends ConsumerWidget {
     final textControllerUser = TextEditingController();
     final textControllerPass = TextEditingController();
     return Material(
+      color: AppColors.background,
       child: SafeArea(
         child: GestureDetector(
           onTap: () {

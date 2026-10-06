@@ -18,7 +18,7 @@ class _ProfileScreen extends State<Profilescreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.background,
         title: Row(
           children: [
             Row(
@@ -29,7 +29,7 @@ class _ProfileScreen extends State<Profilescreen> {
                   },
                   icon: Icon(
                     Icons.arrow_back,
-                    color: AppColors.textPrimary,
+                    color: AppColors.textThird,
                   ),
                 ),
               ],
@@ -41,7 +41,7 @@ class _ProfileScreen extends State<Profilescreen> {
                   style: TextStyle(
                     fontSize: 18, 
                     fontWeight: .bold,
-                    color: AppColors.textPrimary,
+                    color: AppColors.textThird,
                   ),
                 ),
               ],
@@ -56,21 +56,21 @@ class _ProfileScreen extends State<Profilescreen> {
             spacing: 2,
             children: [
               ProfileBanner(),
-              Divider(),
+              SizedBox(height: 4,),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.border,
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppColors.border
+                    color: Colors.white,
                   ),
-                  gradient: LinearGradient(
+                  /*gradient: LinearGradient(
                   colors: List.of([
                     AppColors.surface,
                     AppColors.border,
                   ]),
-                  ),
+                  ),*/
                 ),
                 child: Column(
                   crossAxisAlignment: .start,
@@ -100,8 +100,8 @@ class _ProfileScreen extends State<Profilescreen> {
                     ),
                     SizedBox(height: 2,),
                     ButtonWidget.withoutcol(
-                      title: 'Historial', 
-                      ico: Icons.history,
+                      title: 'Direcciónes', 
+                      ico: Icons.directions,
                       onTap: () {
                         
                       },
@@ -127,21 +127,21 @@ class _ProfileScreen extends State<Profilescreen> {
                   ],
                 ),
               ),
-              Divider(),
+              SizedBox(height: 4,),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.border,
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppColors.border
+                    color: Colors.white,
                   ),
-                  gradient: LinearGradient(
+                  /*gradient: LinearGradient(
                     colors: List.of([
                       AppColors.surface,
                       AppColors.border,
                     ]),
-                  ),
+                  ),*/
                 ),
                 child: Column(
                   crossAxisAlignment: .start,

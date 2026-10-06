@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     onPressed: () {
                       showModalBottomSheet(
+                        showDragHandle: true,
                         context: context,
                         builder: (context) {
                           return DirectionsAdding();

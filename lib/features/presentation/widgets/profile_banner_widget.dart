@@ -13,17 +13,17 @@ class ProfileBanner extends StatelessWidget {
       alignment: .bottomCenter,
       height: 100,
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Colors.transparent,
         shape: .rectangle,
-        gradient: LinearGradient(
+        /*gradient: LinearGradient(
           colors: List.of([
             AppColors.surface,
             AppColors.border,
           ]),
-        ),
-        borderRadius: BorderRadius.circular(10),
+        ),*/
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppColors.border
+          color: Colors.white,
         ),
       ),
       child: Row(
