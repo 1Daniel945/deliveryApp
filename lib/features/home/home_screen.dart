@@ -4,7 +4,7 @@ import 'package:flutter_application_1/features/presentation/widgets/restaurant_c
 import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/features/presentation/widgets/custom_card.dart';
 import 'package:flutter_application_1/features/presentation/widgets/categories.dart';
-import 'package:flutter_application_1/features/presentation/widgets/directions_adding.dart';
+import 'package:flutter_application_1/features/presentation/widgets/select_directions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -58,10 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   IconButton(
                     onPressed: () {
                       showModalBottomSheet(
+                        useSafeArea: true,
                         showDragHandle: true,
                         context: context,
                         builder: (context) {
-                          return DirectionsAdding();
+                          return Wrap(
+                            children: [
+                              SelectDirection(),
+                            ],
+                          );
                         },
                       );
                     },

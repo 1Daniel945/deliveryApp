@@ -5,18 +5,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/routes/app_router.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-void main() async {
+Future<void> main() async {
 
   //Lock landscape orientation
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: 'assets/.env');
+  
+  MapboxOptions.setAccessToken(dotenv.env['MAPBOX_ACCESS_TOKEN'].toString());
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
   
   await Supabase.initialize(
-    url: 'https://nefddpebrhgmmxrbahbp.supabase.co',
-    publishableKey: 'sb_publishable_F9ZTUq8xaBzYVScvE4VgEA_k4Rhwxks',
+    url: dotenv.env['SUPABASE_URL'] ?? '',
+    publishableKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
   );
 
   runApp(const ProviderScope(child: MyApp()));

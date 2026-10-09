@@ -3,7 +3,7 @@ import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginCard extends StatefulWidget {
-  const LoginCard({
+  const  LoginCard({
     super.key,
     required this.textControllerUser,
     required this.textControllerPass,
@@ -18,7 +18,6 @@ class LoginCard extends StatefulWidget {
 
 class _LoginCardState extends State<LoginCard>{
   bool hidePass = true;
-  Icon ico = Icon(Icons.visibility);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,10 +27,25 @@ class _LoginCardState extends State<LoginCard>{
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         mainAxisSize: .min,
         children: [
+          Text(
+            'Inicio de sesión',
+            style: TextStyle(
+              fontWeight: .bold,
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(height: 16,),
           TextField(
             controller: widget.textControllerUser,
             decoration: InputDecoration(
@@ -49,10 +63,11 @@ class _LoginCardState extends State<LoginCard>{
                 onPressed: () {
                   setState(() {
                     hidePass = !hidePass;
-                    ico = Icon(Icons.visibility_off);
                   });
                 },
-                icon: ico,
+                icon: Icon(
+                  hidePass ? Icons.visibility_off : Icons.visibility,
+                ),
                 color: AppColors.primary,
               ),
             ),
@@ -128,7 +143,9 @@ class _LoginCardState extends State<LoginCard>{
               ),
               Spacer(),
               IconButton(
-                onPressed: () {}, 
+                onPressed: () {
+                  context.push('/register');
+                }, 
                 icon: Text('Registrarse')
               ),
             ],

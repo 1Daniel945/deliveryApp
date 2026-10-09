@@ -10,7 +10,7 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.background,
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
-      surface: AppColors.surface,
+      surface: AppColors.background,
     ),
 
     //Texfield decoration

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
-
-class DirectionsAdding extends StatelessWidget {
-  const DirectionsAdding({super.key});
+//import 'package:flutter_application_1/features/presentation/widgets/button_widget.dart';
+import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
+class SelectDirection extends StatelessWidget {
+  const SelectDirection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textController = TextEditingController();
+    //final textController = TextEditingController();
     return Container(
       width: .maxFinite,
-      margin: EdgeInsets.only(left: 10, right: 10),
+      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
-        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -71,30 +71,20 @@ class DirectionsAdding extends StatelessWidget {
             ),
           ),
           SizedBox(height: 4),
-          IconButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(AppColors.primary,),
-              iconColor: WidgetStatePropertyAll(Colors.black,),
-              shape: WidgetStatePropertyAll(ContinuousRectangleBorder(borderRadius: .circular(12))),
-              padding: WidgetStatePropertyAll(.all(15)),
-            ),
-            onPressed: (){
-              //Redireccionar al mapa para que seleccione su ubicación
-            }, 
-            icon: Row(
-              mainAxisAlignment: .center,
-              children: [
-                Icon(Icons.location_on,),
-                Text(
-                  'Agregar una nueva dirección',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: .bold,
-                  ),
-                ),
-              ],
-            ),
+          ButtonWidget1(
+            title: 'Agrega una nueva dirección', 
+            icon: Icon(Icons.add_location_rounded), 
+            color: AppColors.primary,
+            colorIcon: Colors.black, 
+            onTap: (){}
+          ),
+          SizedBox(height: 4),
+          ButtonWidget1(
+            title: 'Dirección actual', 
+            icon: Icon(Icons.my_location_rounded), 
+            color: AppColors.primary,
+            colorIcon: Colors.black, 
+            onTap: (){}
           ),
         ],
       ),

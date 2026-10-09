@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
+import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
 import 'package:flutter_application_1/features/presentation/widgets/delivery_metrics.dart';
 
 class RestaurantScreen extends StatefulWidget {
@@ -196,11 +197,255 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                     child: IconButton(
                                       onPressed: () {
                                         showModalBottomSheet(
-                                          useSafeArea: true,
-                                          showDragHandle: true,
                                           isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
                                           context: context,
                                           builder: (context) {
+                                            return DraggableScrollableSheet(
+                                              initialChildSize: 0.85,
+                                              minChildSize: 0.3,
+                                              maxChildSize: 0.95,
+                                              expand: false,
+                                              builder: (context, scrollController) {
+                                                final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+                                                return Container(
+                                                  decoration: const BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(bottom: bottomInset),
+                                                    child: SingleChildScrollView(
+                                                      controller: scrollController,
+                                                      padding: const EdgeInsets.all(10),
+                                                      child: Column(
+                                                        mainAxisSize: .min,
+                                                        crossAxisAlignment: .start,
+                                                        spacing: 8,
+                                                        children: [
+                                                          Center(
+                                                            child: Container(
+                                                              width: 40,
+                                                              height: 4,
+                                                              margin: const EdgeInsets.only(bottom: 8),
+                                                              decoration: BoxDecoration(
+                                                                color: Colors.grey[600],
+                                                                borderRadius: .circular(2),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          ClipRRect(
+                                                            borderRadius: .circular(12),
+                                                            child: AspectRatio(
+                                                              aspectRatio: 16 / 9,
+                                                              child: Image.network(
+                                                                'https://i.ibb.co/wrdsMjYm/images-4.jpg',
+                                                                errorBuilder: (context, error, stackTrace) {
+                                                                  return Container(
+                                                                    color: Colors.grey[900],
+                                                                    alignment: .center,
+                                                                    child: Column(
+                                                                      mainAxisSize: .min,
+                                                                      children: const [
+                                                                        Icon(
+                                                                          Icons.wifi_off,
+                                                                          color: Colors.grey,
+                                                                          size: 40,
+                                                                        ),
+                                                                        SizedBox(height: 4,),
+                                                                        Text(
+                                                                          'Sin imagen',
+                                                                          style: TextStyle(
+                                                                            color: Colors.grey,
+                                                                            fontSize: 12,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  );
+                                                                },
+                                                                fit: .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment: .spaceBetween,
+                                                            children: [
+                                                              const Text(
+                                                                'Hamburguesa',
+                                                                style: TextStyle(
+                                                                  fontSize: 20,
+                                                                  fontWeight: .bold,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                '\$45 MXN',
+                                                                style: TextStyle(
+                                                                  color: AppColors.primary,
+                                                                  fontWeight: .bold,
+                                                                  fontSize: 20,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const Text(
+                                                            'Hamburguesa doble carne con papas y refresco',
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight: .normal,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 10,),
+                                                          const Divider(endIndent: 5, indent: 5,),
+                                                          Column(
+                                                            crossAxisAlignment: .start,
+                                                            children: [
+                                                              const Text(
+                                                                'Ingredientes',
+                                                                style: TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight: .bold,
+                                                                ),
+                                                              ),
+                                                              ListView.builder(
+                                                                shrinkWrap: true,
+                                                                physics: const NeverScrollableScrollPhysics(),
+                                                                itemCount: 5,
+                                                                itemBuilder: (context, index) {
+                                                                  return CheckboxListTile(
+                                                                    title: Text(
+                                                                      'Example ${index + 1}',
+                                                                      style: const TextStyle(color: Colors.white),
+                                                                    ),
+                                                                    checkColor: Colors.black,
+                                                                    fillColor: WidgetStateProperty.all(Colors.amberAccent),
+                                                                    checkboxShape: CircleBorder(),
+                                                                    value: false,
+                                                                    onChanged: null,
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          const Divider(endIndent: 5, indent: 5,),
+                                                          const Text(
+                                                            'Extras',
+                                                            style: TextStyle(
+                                                              fontSize: 18,
+                                                              fontWeight: .bold,
+                                                            ),
+                                                          ),
+                                                          ListView.builder(
+                                                            shrinkWrap: true,
+                                                            physics: const NeverScrollableScrollPhysics(),
+                                                            itemCount: 5,
+                                                            itemBuilder: (context, index) {
+                                                              return CheckboxListTile(
+                                                                title: Text('Capsu', style: TextStyle(color: Colors.white),),
+                                                                checkColor: Colors.black,
+                                                                fillColor: WidgetStateProperty.all(Colors.amberAccent),
+                                                                checkboxShape: CircleBorder(),
+                                                                value: true,
+                                                                onChanged: null,
+                                                              );
+                                                            },
+                                                          ),
+                                                          const SizedBox(height: 10,),
+                                                          TextField(
+                                                            maxLines: 5,
+                                                            decoration: InputDecoration(
+                                                              hintText: 'Instrucciones especiales',
+                                                              hintStyle: TextStyle(
+                                                                color: AppColors.textSecondary,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(height: 20,),
+                                                          const Divider(endIndent: 5, indent: 5,),
+                                                          Row(
+                                                            mainAxisAlignment: .spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: .circular(50),
+                                                                  border: Border.all(color: Colors.white),
+                                                                ),
+                                                                child: Row(
+                                                                  spacing: 10,
+                                                                  children: [
+                                                                    IconButton(
+                                                                      onPressed: () {
+                                                  
+                                                                      }, 
+                                                                      icon: Icon(
+                                                                        Icons.remove,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      '0',
+                                                                      style: TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight: .bold,
+                                                                      ),
+                                                                    ),
+                                                                    IconButton(
+                                                                      onPressed: (){
+                                                                        
+                                                                      }, 
+                                                                      icon: Icon(
+                                                                        Icons.add,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: .circular(50),
+                                                                  color: AppColors.primary,
+                                                                ),
+                                                                /*child: IconButton(
+                                                                  onPressed: () {
+                                                                
+                                                                  }, 
+                                                                  icon: Row(
+                                                                    spacing: 6,
+                                                                    crossAxisAlignment: .start,
+                                                                    mainAxisSize: .max,
+                                                                    children: [
+                                                                      Text(
+                                                                        'Agregar al carrito \$15',
+                                                                        style: TextStyle(
+                                                                          fontSize: 18,
+                                                                          fontWeight: .normal,
+                                                                          color: Colors.black,
+                                                                        ),
+                                                                      ),
+                                                                      Icon(
+                                                                        Icons.add_shopping_cart,
+                                                                        color: Colors.black,
+                                                                        fontWeight: .normal,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),*/
+                                                                child: ButtonWidget1(
+                                                                  title: 'Agregar al carrito \$15', 
+                                                                  icon: Icon(Icons.add_location), 
+                                                                  color: AppColors.primary, 
+                                                                  colorIcon: Colors.black, 
+                                                                  onTap: () {},
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                            );
                                             /*return SingleChildScrollView(
                                               child: Padding(
                                                 padding: const EdgeInsets.all(10),
@@ -333,218 +578,6 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                                                 ),
                                               ),
                                             );*/
-                                            final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-                                            return Padding(
-                                              padding: EdgeInsets.only(bottom: bottomInset),
-                                              child: SingleChildScrollView(
-                                                padding: const EdgeInsets.all(10),
-                                                child: Column(
-                                                  mainAxisSize: .min,
-                                                  crossAxisAlignment: .start,
-                                                  spacing: 8,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius: .circular(12),
-                                                      child: AspectRatio(
-                                                        aspectRatio: 16 / 9,
-                                                        child: Image.network(
-                                                          'https://i.ibb.co/wrdsMjYm/images-4.jpg',
-                                                          errorBuilder: (context, error, stackTrace) {
-                                                            return Container(
-                                                              color: Colors.grey[900],
-                                                              alignment: .center,
-                                                              child: Column(
-                                                                mainAxisSize: .min,
-                                                                children: const [
-                                                                  Icon(
-                                                                    Icons.wifi_off,
-                                                                    color: Colors.grey,
-                                                                    size: 40,
-                                                                  ),
-                                                                  SizedBox(height: 4,),
-                                                                  Text(
-                                                                    'Sin imagen',
-                                                                    style: TextStyle(
-                                                                      color: Colors.grey,
-                                                                      fontSize: 12,
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            );
-                                                          },
-                                                          fit: .cover,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment: .spaceBetween,
-                                                      children: [
-                                                        const Text(
-                                                          'Hamburguesa',
-                                                          style: TextStyle(
-                                                            fontSize: 20,
-                                                            fontWeight: .bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '\$45 MXN',
-                                                          style: TextStyle(
-                                                            color: AppColors.primary,
-                                                            fontWeight: .bold,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const Text(
-                                                      'Hamburguesa doble carne con papas y refresco',
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight: .normal,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 10,),
-                                                    const Divider(endIndent: 5, indent: 5,),
-                                                    Column(
-                                                      crossAxisAlignment: .start,
-                                                      children: [
-                                                        const Text(
-                                                          'Ingredientes',
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight: .bold,
-                                                          ),
-                                                        ),
-                                                        ListView.builder(
-                                                          shrinkWrap: true,
-                                                          physics: const NeverScrollableScrollPhysics(),
-                                                          itemCount: 5,
-                                                          itemBuilder: (context, index) {
-                                                            return CheckboxListTile(
-                                                              title: Text(
-                                                                'Example ${index + 1}',
-                                                                style: const TextStyle(color: Colors.white),
-                                                              ),
-                                                              checkColor: Colors.black,
-                                                              fillColor: WidgetStateProperty.all(Colors.amberAccent),
-                                                              checkboxShape: CircleBorder(),
-                                                              value: false,
-                                                              onChanged: null,
-                                                            );
-                                                          },
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const Divider(endIndent: 5, indent: 5,),
-                                                    const Text(
-                                                      'Extras',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight: .bold,
-                                                      ),
-                                                    ),
-                                                    ListView.builder(
-                                                      shrinkWrap: true,
-                                                      physics: const NeverScrollableScrollPhysics(),
-                                                      itemCount: 5,
-                                                      itemBuilder: (context, index) {
-                                                        return CheckboxListTile(
-                                                          title: Text('Capsu', style: TextStyle(color: Colors.white),),
-                                                          checkColor: Colors.black,
-                                                          fillColor: WidgetStateProperty.all(Colors.amberAccent),
-                                                          checkboxShape: CircleBorder(),
-                                                          value: true,
-                                                          onChanged: null,
-                                                        );
-                                                      },
-                                                    ),
-                                                    const SizedBox(height: 10,),
-                                                    TextField(
-                                                      maxLines: 5,
-                                                      decoration: InputDecoration(
-                                                        hintText: 'Instrucciones especiales',
-                                                        hintStyle: TextStyle(
-                                                          color: AppColors.textSecondary,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 20,),
-                                                    const Divider(endIndent: 5, indent: 5,),
-                                                    Row(
-                                                      mainAxisAlignment: .spaceBetween,
-                                                      children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: .circular(50),
-                                                            border: Border.all(color: Colors.white),
-                                                          ),
-                                                          child: Row(
-                                                            spacing: 10,
-                                                            children: [
-                                                              IconButton(
-                                                                onPressed: () {
-
-                                                                }, 
-                                                                icon: Icon(
-                                                                  Icons.remove,
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                '0',
-                                                                style: TextStyle(
-                                                                  fontSize: 18,
-                                                                  fontWeight: .bold,
-                                                                ),
-                                                              ),
-                                                              IconButton(
-                                                                onPressed: (){
-                                                                  
-                                                                }, 
-                                                                icon: Icon(
-                                                                  Icons.add,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: .circular(50),
-                                                            color: AppColors.primary,
-                                                          ),
-                                                          child: IconButton(
-                                                            onPressed: () {
-                                                          
-                                                            }, 
-                                                            icon: Row(
-                                                              spacing: 6,
-                                                              crossAxisAlignment: .start,
-                                                              mainAxisSize: .max,
-                                                              children: [
-                                                                Text(
-                                                                  'Agregar al carrito \$15',
-                                                                  style: TextStyle(
-                                                                    fontSize: 18,
-                                                                    fontWeight: .normal,
-                                                                    color: Colors.black,
-                                                                  ),
-                                                                ),
-                                                                Icon(
-                                                                  Icons.add_shopping_cart,
-                                                                  color: Colors.black,
-                                                                  fontWeight: .normal,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
                                           },
                                         );
                                       },
