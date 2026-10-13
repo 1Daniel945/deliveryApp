@@ -22,8 +22,8 @@ class _LoginCardState extends State<LoginCard>{
   Widget build(BuildContext context) {
     return Container(
       width: .maxFinite,
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),

@@ -27,9 +27,8 @@ class ButtonWidget1 extends StatelessWidget {
         shape: WidgetStatePropertyAll(ContinuousRectangleBorder(borderRadius: .circular(12))),
         padding: WidgetStatePropertyAll(.all(15)),
       ),
-      onPressed: (){
-        //Redireccionar al mapa para que seleccione su ubicación
-      }, 
+      onPressed: onTap,
+        //Redireccionar al mapa para que seleccione su ubicación, 
       icon: Row(
         spacing: 4,
         mainAxisAlignment: .center,
