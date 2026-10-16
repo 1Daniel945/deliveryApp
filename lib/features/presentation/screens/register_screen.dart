@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../auth/presentation/auth_controller.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -13,40 +14,43 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final phoneController = TextEditingController();
   
   @override
   void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _phoneController.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    phoneController.dispose();
     super.dispose();
   }
 
   void onRegisterPressed() async {
-    final name = _nameController.text.trim();
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    final phoneNumber = _phoneController.text.trim(); 
 
-    if(email.isEmpty || password.isEmpty) return;
+    if(!formKey.currentState!.validate()) {
+      return;
+    }
 
-    final succes = await ref.read(authControllerProvider.notifier).singUp(
+    final name = nameController.text.trim();
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+    final phone = phoneController.text.trim(); 
+
+    final success = await ref.read(authControllerProvider.notifier).signUp(
       email: email, 
       password: password,
+      name: name,
+      phone: phone,
     );
 
     if(!mounted) return;
 
-    if(succes) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('¡Registro exitoso! Revisa tu correo si requiere confirmación.')),
-      );
+    if(success) {
+      context.push('/otpView', extra: email);
     }
     else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -95,7 +99,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     borderRadius: .circular(12),
                   ),
                   child: Form(
-                    key: _formKey,
+                    key: formKey,
                     child: Column(
                       children: [
                         Text(
@@ -107,7 +111,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                         SizedBox(height: 16,),
                         TextFormField(
-                          controller: _nameController,
+                          controller: nameController,
                           decoration: InputDecoration(
                             labelText: 'Nombre',
                             prefixIcon: Icon(Icons.person, color: AppColors.primary,),
@@ -124,7 +128,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                         const SizedBox(height: 16,),
                         TextFormField(
-                          controller: _emailController,
+                          controller: emailController,
                           decoration: InputDecoration(
                             hintText: 'Correo electrónico',
                             prefixIcon: Icon(Icons.mail, color: AppColors.primary,),
@@ -144,7 +148,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                         const SizedBox(height: 16,),
                         TextFormField(
-                          controller: _phoneController,
+                          controller: phoneController,
                           keyboardType: .number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -162,7 +166,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                         const SizedBox(height: 16,),
                         TextFormField(
-                          controller: _passwordController,
+                          controller: passwordController,
                           decoration: InputDecoration(
                             hintText: 'Contraseña',
                             prefixIcon: Icon(

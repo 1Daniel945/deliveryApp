@@ -12,4 +12,5 @@ class AppColors {
   static const textThird = Color.fromARGB(255, 242, 240, 240);
   static const border = Color(0xFF545454);
   static const optional = Color.fromARGB(255, 218, 165, 32);
+  static const backgroundErrorMessageWarning = Color(0xFFFFFBC3);
 }

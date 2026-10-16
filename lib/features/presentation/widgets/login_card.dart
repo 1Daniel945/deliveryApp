@@ -1,37 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginCard extends StatefulWidget {
+class LoginCard extends ConsumerStatefulWidget {
+  
+  final Function(String email, String pass) onLoginPressed;
+  
   const  LoginCard({
-    super.key,
-    required this.textControllerUser,
-    required this.textControllerPass,
+    super.key, 
+    required this.onLoginPressed,
   });
 
-  final TextEditingController textControllerUser;
-  final TextEditingController textControllerPass;
-
   @override
-  State<LoginCard> createState() => _LoginCardState();
+  ConsumerState<LoginCard> createState() => _LoginCardState();
 }
 
-class _LoginCardState extends State<LoginCard>{
+class _LoginCardState extends ConsumerState<LoginCard>{
+
+  final textControllerUser = TextEditingController();
+  final textControllerPass = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    textControllerUser.dispose();
+    textControllerPass.dispose();
+  }
+
   bool hidePass = true;
+
   @override
   Widget build(BuildContext context) {
+    //final isLoading = ref.watch(authControllerProvider);
     return Container(
-      width: .maxFinite,
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(20),
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -45,17 +58,17 @@ class _LoginCardState extends State<LoginCard>{
               fontSize: 20,
             ),
           ),
-          SizedBox(height: 16,),
+          const SizedBox(height: 16,),
           TextField(
-            controller: widget.textControllerUser,
+            controller: textControllerUser,
             decoration: InputDecoration(
               hintText: 'Ingresa tu usuario',
               prefixIcon: Icon(Icons.person, color: AppColors.primary),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextField(
-            controller: widget.textControllerPass,
+            controller: textControllerPass,
             decoration: InputDecoration(
               hintText: 'Ingresa tu contraseña',
               prefixIcon: Icon(Icons.lock, color: AppColors.primary),
@@ -73,10 +86,13 @@ class _LoginCardState extends State<LoginCard>{
             ),
             obscureText: hidePass,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           InkWell(
             onTap: () {
-              context.push('/home');
+              widget.onLoginPressed(
+                textControllerUser.text, 
+                textControllerPass.text,
+              );
             },
             borderRadius: .circular(12),
             child: Container(
@@ -102,8 +118,10 @@ class _LoginCardState extends State<LoginCard>{
             ),
           ),
           SizedBox(height: 16),
-          InkWell(
-            onTap: () {},
+          /*InkWell(
+            onTap: () {
+              isLoading ? null : () => ref.read(authControllerProvider.notifier).signInWithGoogle();
+            },
             borderRadius: .circular(12),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -133,20 +151,20 @@ class _LoginCardState extends State<LoginCard>{
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 4),
+          ),*/
+          const SizedBox(height: 4),
           Row(
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Text('Olvidaste tu contraseña'),
+                icon: const Text('Olvidaste tu contraseña'),
               ),
-              Spacer(),
+              const Spacer(),
               IconButton(
                 onPressed: () {
                   context.push('/register');
                 }, 
-                icon: Text('Registrarse')
+                icon: const Text('Registrarse')
               ),
             ],
           ),
