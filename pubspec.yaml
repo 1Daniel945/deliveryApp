@@ -43,7 +43,7 @@ dependencies:
   mapbox_maps_flutter: ^3.0.0
   flutter_dotenv: ^6.0.1
   google_sign_in: ^7.2.0
-
+  flutter_svg: 2.0.17
   
 dev_dependencies:
   flutter_test:
@@ -71,6 +71,8 @@ flutter:
   assets: 
     - assets/.env
     - assets/Logo.png
+    - assets/icons/
+    - assets/illustration.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -74,7 +74,7 @@ class _OtpViewState extends ConsumerState<OtpView> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authControllerProvider);
+    //final isLoading = ref.watch(authControllerProvider);
     final isExpired = remainigSeconds == 0;
     return Scaffold(
       appBar: AppBar(title: const Text('Verificar código'),),

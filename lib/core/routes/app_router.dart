@@ -1,9 +1,11 @@
-import 'package:flutter_application_1/features/home/profiles_screen.dart';
+import 'package:flutter_application_1/features/configuration/screens/configuration_screen.dart';
+import 'package:flutter_application_1/features/payments/screens/paymentMethod.dart';
 import 'package:flutter_application_1/features/presentation/screens/payment_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/login_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/register_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/restaurant_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/verifyOtp_screen.dart';
+import 'package:flutter_application_1/features/profile/screens/profile_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/home/home_screen.dart';
@@ -27,7 +29,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/profile',
-        builder: (context, state) => const Profilescreen(),
+        builder: (context, state) => const ConfigurationScreen(),
+      ),
+      GoRoute(
+        path: '/editProfile',
+        builder: (context, state) => const ProfileScreen(),
       ),
       GoRoute(
         path: '/restaurantScreen',
@@ -36,6 +42,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/payment',
         builder: (context, state) => const PaymentScreen(),
+      ),
+      GoRoute(
+        path: '/paymentMethod',
+        builder: (context, state) => const PaymentmethodScreen(),
       ),
       GoRoute(
         path: '/register',
