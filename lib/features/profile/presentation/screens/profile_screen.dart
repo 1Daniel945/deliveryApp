@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
-import 'package:flutter_application_1/features/profile/widgets/formData.dart';
+import 'package:flutter_application_1/features/profile/presentation/widgets/form_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -86,7 +87,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               icon: Icon(Icons.photo_camera), 
                               color: AppColors.primary, 
                               colorIcon: Colors.black, 
-                              onTap: (){}
+                              onTap: () async {
+                                final picker = ImagePicker();
+                                final XFile? pickedFile = await picker.pickImage(
+                                  source: ImageSource.gallery,
+                                );
+                                if(pickedFile != null) {
+                                  
+                                }
+                              }
                             ),
                           ],
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import '../data/auth_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository());
 
@@ -56,10 +57,32 @@ class AuthController extends StateNotifier<bool> {
     state = true;
     try {
       await _authRepository.verifyEmailOtp(email: email, token: token);
+      state = false;
     } catch(e) {
-      rethrow;
-    } finally {
+      print('Error detallado en verifyOTP: $e');
       state = false;
     }
   } 
+
+  Future<void> getProfileData() async {
+    state = true;
+    try {
+      final currentUser = Supabase.instance.client.auth.currentUser;
+      if(currentUser != null) {
+        await Supabase.instance.client.from('profiles').upsert({
+          'id': currentUser.id,
+          'name': currentUser.userMetadata?['display_name'],
+          'phone': currentUser.userMetadata?['phone'],
+          'urlImage': null,
+          'updated_at': DateTime.now().toIso8601String(),
+          'direction': '',
+          'bornDate': '',
+        });
+        state = false;
+      }
+    } catch(e) {
+      state = false;
+    }
+  }
+
 }

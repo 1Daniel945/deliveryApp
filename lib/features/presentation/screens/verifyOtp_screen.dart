@@ -47,6 +47,7 @@ class _OtpViewState extends ConsumerState<OtpView> {
         email: widget.email, 
         token: pinController.text.trim(),
       );
+      await ref.read(authControllerProvider.notifier).getProfileData();
       if(!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Correo verificado correctamente'),
@@ -55,7 +56,6 @@ class _OtpViewState extends ConsumerState<OtpView> {
       context.go('/home');
     } catch(e) {
       if(!mounted) return;
-      
     }
   }
 
