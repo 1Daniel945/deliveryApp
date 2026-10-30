@@ -46,6 +46,7 @@ dependencies:
   flutter_svg: 2.0.17
   image_picker: ^1.2.4
   flutter_image_compress: ^2.5.1
+  skeletonizer: ^3.0.0
   
 dev_dependencies:
   flutter_test:

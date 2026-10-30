@@ -5,7 +5,17 @@ import 'package:flutter_application_1/features/profile/presentation/controllers/
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Formdata extends ConsumerStatefulWidget {
-  const Formdata({super.key});
+  
+  final String name;
+  final String email;
+  final String phone;
+
+  const Formdata({
+    super.key,
+    required this.name,
+    required this.email,
+    required this.phone,
+  });
 
   @override
   ConsumerState<Formdata> createState() => _FormdataState();
@@ -83,6 +93,11 @@ class _FormdataState extends ConsumerState<Formdata> {
 
   @override
   Widget build(BuildContext context) {
+    
+    nameController.text = widget.name;
+    emailController.text = widget.email;
+    phoneController.text = widget.phone;
+    
     return Container(
       margin: EdgeInsets.all(10),
       child: Form(
@@ -97,7 +112,6 @@ class _FormdataState extends ConsumerState<Formdata> {
                   Icons.person_outline,
                   color: AppColors.primary,
                 ),
-                hintText: 'Juan Daniel Jimenez Lopez',
                 labelText:'Nombre', 
                 floatingLabelBehavior: .always,
               ),
@@ -110,7 +124,6 @@ class _FormdataState extends ConsumerState<Formdata> {
                   Icons.email_outlined,
                   color: AppColors.primary,
                 ),
-                hintText: 'zonacero945@gmail.com',
                 labelText:'correo electrónico', 
                 floatingLabelBehavior: .always,
               ),
@@ -123,7 +136,6 @@ class _FormdataState extends ConsumerState<Formdata> {
                   Icons.phone_outlined,
                   color: AppColors.primary,
                 ),
-                hintText: '4451102197',
                 labelText:'Número de teléfono', 
                 floatingLabelBehavior: .always,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
+import 'package:flutter_application_1/features/auth/data/auth_repository.dart';
 import 'package:flutter_application_1/features/configuration/widgets/configuration_cards.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,54 @@ class ConfigurationScreen extends StatefulWidget {
 }
 
 class _ConfigurationScreenState extends State<ConfigurationScreen> {
+
+  String? name;
+  String? email;
+  final authRepository = AuthRepository();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentData();
+  }
+
+  void getCurrentData() {
+    final data = authRepository.getUserProfileData();
+    setState(() {
+      name = data['name'];
+      email = data['email'];
+    });
+  }
+
+  Future<void> closeSesion() async {
+    authRepository.closeSesion();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 3),
+        content: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: .all(color: AppColors.border),
+            borderRadius: .circular(12),
+            color: AppColors.backgroundErrorMessageWarning,
+          ),
+          child: Text(
+            'Cerrando sesión por favor espere.',
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            ),
+            textAlign: .center,
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
+    await Future.delayed(const Duration(seconds: 3));
+    context.go('/');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,13 +118,13 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                         crossAxisAlignment: .start,
                         children: [
                           Text(
-                            'Juan Daniel Jiménez López',
+                            name.toString(),
                             style: TextStyle(fontWeight: .bold, fontSize: 16),
                             overflow: .ellipsis,
                             maxLines: 2,
                           ),
                           Text(
-                            'zonacero945@gmail.com',
+                            email.toString(),
                             style: TextStyle(fontWeight: .normal, fontSize: 14),
                             overflow: .ellipsis,
                             maxLines: 1,
@@ -147,7 +196,7 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                 color: Colors.redAccent, 
                 colorIcon: Colors.black, 
                 onTap: () {
-                  context.go('/');
+                  closeSesion();
                 }
               ),
             ],

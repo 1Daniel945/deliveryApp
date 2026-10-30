@@ -18,11 +18,8 @@ class CategoryItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Material(
-        color: Colors.transparent,
-        child: InkWell(
+        child: GestureDetector(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(50),
-          splashColor: Colors.transparent,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

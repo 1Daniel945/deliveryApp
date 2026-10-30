@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
+import 'package:flutter_application_1/features/home/presentation/widgets/categories_selector.dart';
 import 'package:flutter_application_1/features/presentation/widgets/restaurant_card.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/features/presentation/widgets/custom_card.dart';
-import 'package:flutter_application_1/features/presentation/widgets/categories.dart';
 import 'package:flutter_application_1/features/presentation/widgets/select_directions.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,15 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<(String, String)> categoryList = [
-    ('Pizzas', 'https://i.ibb.co/nMn7WhTC/pizza-Cartoon.png'),
-    ('Hamburgesas', 'https://i.ibb.co/pBq9pqtX/Hamburgesa-Cartoon.png'),
-    ('Tacos', 'https://i.ibb.co/VW77KdNp/Tacos-Cartoon.png'),
-    ('Botanas', 'https://i.ibb.co/9mV7cCQd/Botanas-Cartoon.png'),
-    ('Sushi', 'https://i.ibb.co/fd8gHprD/Sushi-Cartoon.png'),
-    ('Farmacias', 'https://i.ibb.co/67GyxT0V/farmacia-Cartoon.jpg'),
-  ];
-  String selectedCategory = 'Promociones';
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -128,39 +119,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: 110,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        children: categoryList.map((category) {
-                          final isSelected = selectedCategory == category.$1;
-                          return CategoryItem(
-                            url: category.$2,
-                            title: category.$1,
-                            isSelected: isSelected,
-                            onTap: () {
-                              setState(() {
-                                if (selectedCategory == category.$1) {
-                                  selectedCategory = 'Promociones';
-                                } else {
-                                  selectedCategory = category.$1;
-                                }
-                              });
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
+                  Categories(),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$selectedCategory ',
+                          '',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

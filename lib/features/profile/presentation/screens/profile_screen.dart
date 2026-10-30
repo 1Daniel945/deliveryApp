@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
+import 'package:flutter_application_1/features/auth/data/auth_repository.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
 import 'package:flutter_application_1/features/profile/presentation/widgets/form_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +14,33 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+
+  String? name;
+  String? email;
+  String? phone;
+
+  final authRepository = AuthRepository();
+  
+  @override
+  void initState() {
+    super.initState();
+    getCurrentData();
+  }
+
+  Future<void> getCurrentData() async {
+    try {
+      final data = authRepository.getUserProfileData();
+      setState(() {
+        name = data['name'];
+        email = data['email'];
+        phone = data['phone'];
+      });
+    }
+    catch(e) {
+      throw Exception(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +131,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ],
                   ),
                 ),
-                Formdata(),
+                Formdata(
+                  name: name.toString(),
+                  email: email.toString(),
+                  phone: phone.toString(),
+                ),
               ],
             ),
           ),

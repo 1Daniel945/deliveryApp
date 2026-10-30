@@ -1,4 +1,4 @@
-import 'package:flutter_application_1/features/profile/data/datasources/profile_dataSource.dart';
+import 'package:flutter_application_1/features/profile/data/datasources/profile_datasource.dart';
 import 'package:flutter_application_1/features/profile/data/repositories/profile_repository.dart';
 import 'package:flutter_application_1/features/profile/domain/repositories/profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

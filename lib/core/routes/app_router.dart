@@ -1,5 +1,5 @@
 import 'package:flutter_application_1/features/configuration/screens/configuration_screen.dart';
-import 'package:flutter_application_1/features/payments/screens/paymentMethod.dart';
+import 'package:flutter_application_1/features/payments/screens/payment_method.dart';
 import 'package:flutter_application_1/features/presentation/screens/payment_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/login_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/register_screen.dart';
