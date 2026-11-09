@@ -1,23 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
+import 'package:flutter_application_1/features/home/presentation/controllers/home_controller.dart';
 import 'package:flutter_application_1/features/home/presentation/widgets/categories_selector.dart';
-import 'package:flutter_application_1/features/presentation/widgets/restaurant_card.dart';
+import 'package:flutter_application_1/features/restaurants/data/datasources/restaurant_datasource.dart';
+import 'package:flutter_application_1/features/restaurants/data/models/restaurant_model.dart';
+import 'package:flutter_application_1/features/restaurants/presentation/widgets/restaurant_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/features/presentation/widgets/custom_card.dart';
 import 'package:flutter_application_1/features/presentation/widgets/select_directions.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+
+  List<RestaurantModel> restaurants = [];
+  bool isSkeleton = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadRestaurants();
+  }
+
+  Future<void> loadRestaurants() async {
+    try {
+      final data = RestaurantDatasource();
+      final result = await data.getRestaurants();
+      setState(() {
+        restaurants = result;
+        isSkeleton = false;
+      });
+    } catch(e) {
+      isSkeleton = true;
+      throw Exception('Error al obtener los restaurantes: $e');
+    }
+  }
+
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final currentCategory = ref.watch(selectCategoryProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -83,28 +113,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(
+                      width: .maxFinite,
+                      alignment: .topStart,
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.black,
+                        border: Border.all(color: AppColors.border, width: 2),
+                        borderRadius: .circular(30),
                       ),
-                      child: TextField(
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white),
-                        onTapOutside: (event) {
-                          FocusScope.of(context).unfocus();
-                        },
-                        decoration: InputDecoration(
-                          hintText: '¿Qué se te antoja hoy?',
-                          hintStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.search, color: Colors.white),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(100),
-                            ),
+                      child: TextButton.icon(
+                        onPressed: (){}, 
+                        label: Text(
+                          'Busca restaurantes, platillos o categorias', 
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                            fontWeight: .normal,  
+                            overflow: .ellipsis,
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 12),
+                          maxLines: 1,
                         ),
-                      ),
+                        icon: Icon(
+                          Icons.search,
+                          size: 24,
+                          color: Colors.white,
+                        ),)
                     ),
                   ),
                   Container(
@@ -126,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '',
+                          currentCategory.toString(),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -304,7 +336,41 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             SizedBox(height: 20),
-                            SizedBox(
+                            SingleChildScrollView(
+                              scrollDirection: .vertical,
+                              child: Skeletonizer(
+                                enabled: isSkeleton,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: restaurants.length,
+                                  itemBuilder: (context, index) {
+                                    final restaurant = restaurants[index];
+                                    final closingHour = int.parse(restaurant.closingTime.substring(0, 2));
+                                    final closingMinutes = int.parse(restaurant.closingTime.substring(3, 5));
+                                    final openHour = int.parse(restaurant.openTime.substring(0, 2));
+                                    final openMinutes = int.parse(restaurant.openTime.substring(3, 5));
+                                    return GestureDetector(
+                                      onTap: () {
+                                        context.push('restaurantScreen');
+                                      },
+                                      child:  RestaurantCard(
+                                        name: restaurant.name, 
+                                        bannerUrl: restaurant.urlBanner, 
+                                        logoUrl: restaurant.urlLogo, 
+                                        id: restaurant.id,
+                                        isPM: openHour > 11 && openHour <= 23,
+                                        closingHour: closingHour,
+                                        closeMinutes: closingMinutes,
+                                        openHour: openHour,
+                                        openMinutes: openMinutes,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            /*SizedBox(
                               child: SingleChildScrollView(
                                 scrollDirection: .vertical,
                                 child: Column(
@@ -328,7 +394,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ),*/
+
                           ],
                         ),
                       ),
@@ -395,8 +462,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-              
-            
           ],
         ),
       ),

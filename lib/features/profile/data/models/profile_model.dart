@@ -7,7 +7,7 @@ class ProfileModel extends ProfileEntity {
     required super.email,
     required super.phone,
     required super.direction,
-    super.urlImage,
+    super.urlImage, 
     required super.bornDate,
   });
 

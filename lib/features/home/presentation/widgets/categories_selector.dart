@@ -7,7 +7,7 @@ import 'package:skeletonizer/skeletonizer.dart';
   
 class Categories extends ConsumerStatefulWidget {
 
-  const Categories({super.key,});
+  const Categories({super.key});
 
   @override
   ConsumerState<Categories> createState() => _Categories();
@@ -50,6 +50,7 @@ class _Categories extends ConsumerState<Categories> {
                       } else {
                         selectedCategory = categories[index].name;
                       }
+                      ref.read(selectCategoryProvider.notifier).state = selectedCategory;
                     });
                   },
                 );

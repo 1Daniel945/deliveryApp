@@ -11,7 +11,7 @@ class StaticMapWidget extends StatefulWidget {
 class _StaticMapWidgetState extends State<StaticMapWidget> {
   MapboxMap? mapboxMap;
 
-  _onMapCreated(MapboxMap map) async {
+  Future<void> _onMapCreated(MapboxMap map) async {
     mapboxMap = map;
     
     await mapboxMap?.setCamera(

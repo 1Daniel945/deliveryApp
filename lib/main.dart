@@ -23,6 +23,11 @@ Future<void> main() async {
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? '',
     publishableKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
+    authOptions: FlutterAuthClientOptions(
+      localStorage: SharedPreferencesLocalStorage(
+        persistSessionKey: 'supabase_session',
+      ),
+    ),
   );
 
   runApp(const ProviderScope(child: MyApp()));
@@ -31,7 +36,7 @@ Future<void> main() async {
 final supabase = Supabase.instance.client;
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+  const MyApp({super.key,});
 
   // This widget is the root of your application.
   @override
