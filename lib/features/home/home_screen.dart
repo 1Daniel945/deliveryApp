@@ -359,7 +359,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         bannerUrl: restaurant.urlBanner, 
                                         logoUrl: restaurant.urlLogo, 
                                         id: restaurant.id,
-                                        isPM: openHour > 11 && openHour <= 23,
+                                        isPM: openHour >= 12 && openHour <= 23,
                                         closingHour: closingHour,
                                         closeMinutes: closingMinutes,
                                         openHour: openHour,

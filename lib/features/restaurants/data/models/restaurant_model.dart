@@ -16,8 +16,8 @@ class RestaurantModel extends RestaurantEntity {
       name: mp['name']?.toString() ?? '',
       urlLogo: mp['url_logo']?.toString() ?? '',
       urlBanner: mp['url_banner']?.toString() ?? '',
-      openTime: mp['closing_time']?.toString() ?? '',
-      closingTime: mp['open_time']?.toString() ?? '',
+      openTime: mp['open_time']?.toString() ?? '',
+      closingTime: mp['closing_time']?.toString() ?? '',
     );
   }
 }

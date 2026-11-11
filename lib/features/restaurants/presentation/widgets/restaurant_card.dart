@@ -274,7 +274,7 @@ class RestaurantCard extends ConsumerWidget {
     final currentMinutes = (now.hour * 60) + now.minute;
     final openMinutess = (openHour * 60) + openMinutes;
     final closeMinutess = (closingHour * 60) + closeMinutes;
-    bool isOpen = currentMinutes >= closeMinutess && currentMinutes < openMinutess;
+    bool isOpen = currentMinutes >= openMinutess && currentMinutes <= closeMinutess;
     
     return SafeArea(
       child: Center(
@@ -382,7 +382,7 @@ class RestaurantCard extends ConsumerWidget {
                           const SizedBox(width: 4,),
                           isOpen ?
                           Text(
-                            'Abierto ahora | Cierra a las ${openHour % 12 == 0 ? 12 : openHour % 12}:${openMinutes == 0 ? '00' : openMinutes} ${isPM ? 'P.M.' : 'A.M.'}',
+                            'Abierto ahora | Cierra a las ${closingHour % 12 == 0 ? 12 : closingHour % 12}:${closeMinutes == 0 ? '00' : closeMinutes} ${closingHour >= 12 && closingHour <= 23 ? 'P.M.' : 'A.M.'}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: .bold,
@@ -390,7 +390,7 @@ class RestaurantCard extends ConsumerWidget {
                           )
                           :
                           Text(
-                            'Cerrado | Abre a las ${closingHour % 12 == 0 ? 12 : closingHour % 12}:${closeMinutes == 0 ? '00' : closeMinutes} ${!isPM ? 'P.M.' : 'A.M.'}',
+                            'Cerrado | Abre a las ${openHour % 12 == 0 ? 12 : openHour % 12}:${openMinutes == 0 ? '00' : openMinutes} ${isPM ? 'P.M.' : 'A.M.'}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: .bold,

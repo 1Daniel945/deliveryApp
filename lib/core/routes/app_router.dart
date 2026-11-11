@@ -4,7 +4,7 @@ import 'package:flutter_application_1/features/payments/screens/payment_method.d
 import 'package:flutter_application_1/features/presentation/screens/payment_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/login_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/register_screen.dart';
-import 'package:flutter_application_1/features/presentation/screens/restaurant_screen.dart';
+import 'package:flutter_application_1/features/restaurants/presentation/screens/restaurant_screen.dart';
 import 'package:flutter_application_1/features/presentation/screens/verifyotp_screen.dart';
 import 'package:flutter_application_1/features/profile/presentation/screens/profile_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

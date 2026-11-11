@@ -2,90 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
 import 'package:flutter_application_1/features/presentation/widgets/delivery_metrics.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RestaurantScreen extends StatefulWidget {
+class RestaurantScreen extends ConsumerWidget {
   const RestaurantScreen({super.key});
 
   @override
-  State<RestaurantScreen> createState() => _RestaurantScreenState();
-}
-
-class _RestaurantScreenState extends State<RestaurantScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      /*appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            IconButton(
-              onPressed: () {
-                context.pop();
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                color: AppColors.textThird,
-              ),
-            ),
-            Text(
-              'Menú',
-              style: TextStyle(
-                color: AppColors.textThird,
-              ),
-            ),
-          ],
-        ),
-      ),*/
       body: SafeArea(
         child: Column(
           children: [
-            //BannerRestaurant(),
             Expanded(
               child: CustomScrollView(
                 scrollDirection: .vertical,
-                /*slivers: [
-                    const SliverAppBar(
-                      backgroundColor: Colors.amber,
-                      title: Text('Kindacode.com'),
-                      expandedHeight: 150,
-                      collapsedHeight: 60,
-                      automaticallyImplyLeading: false,
-                    ),
-                    const SliverAppBar(
-                      backgroundColor: Colors.green,
-                      title: Text('Have a nice day'),
-                      floating: true,
-                      automaticallyImplyLeading: false,
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return Card(
-                            margin: const EdgeInsets.all(15),
-                            child: Container(
-                              color: Colors.blue[100 * (index % 9 + 1)],
-                              height: 80,
-                              alignment: .center,
-                              child: Text(
-                                'Item $index',
-                                style: const TextStyle(fontSize: 30),
-                              ),
-                            ),
-                          );
-                        },
-                        childCount: 10,
-                      ), 
-                    ),
-                  ],*/
                 slivers: [
                   const SliverAppBar(
+                    title: Text(
+                      'Hamburguesas',
+                      style: TextStyle(
+                        backgroundColor: Colors.black,
+                      ),
+                    ),
                     expandedHeight: 200,
+                    backgroundColor: Colors.black,
                     pinned: true,
                     flexibleSpace: FlexibleSpaceBar(
                       background: Image(
                         image: NetworkImage(
                           'https://i.ibb.co/LDbsfygk/restaurante-de-hamburgesas.jpg',
+                          
                         ),
                         fit: .cover,
                       ),
@@ -97,13 +43,6 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                       child: Column(
                         spacing: 8,
                         children:[
-                          Text(
-                            'Hamburguesas el primo',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: .bold,
-                            ),
-                          ),
                           DeliveryMetrics(),
                         ],
                       ),
@@ -152,7 +91,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                               clipBehavior: .none,
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(50),
                                   child: AspectRatio(
                                     aspectRatio: 1.0,
                                     child: Image.network(
