@@ -7,19 +7,22 @@ class DeliveryMetrics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: .start,
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+          margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: AppColors.textSecondary,
+            border: Border.all(color: AppColors.border),
             borderRadius: BorderRadius.circular(12),
             gradient: LinearGradient(
               colors: List.of([AppColors.surface, AppColors.border]),
             ),
           ),
           child: Row(
-            spacing: 4,
-            mainAxisAlignment: .center,
+            spacing: 16,
+            mainAxisSize: .min,
             children: [
               Column(
                 children: [
@@ -33,7 +36,14 @@ class DeliveryMetrics extends StatelessWidget {
                   Text('\$18 MXN'),
                 ],
               ),
-              Spacer(),
+              const SizedBox(
+                height: 50,
+                child: VerticalDivider(
+                  color: Colors.white54,
+                  thickness: 1,
+                  width: 20,
+                ),
+              ),
               Column(
                 children: [
                   Row(
@@ -44,19 +54,6 @@ class DeliveryMetrics extends StatelessWidget {
                     ],
                   ),
                   Text('25 min'),
-                ],
-              ),
-              Spacer(),
-              Column(
-                children: [
-                  Row(
-                    spacing: 2,
-                    children: [
-                      Text('Calificación', style: TextStyle(fontWeight: .bold)),
-                      Icon(Icons.star_outline_outlined),
-                    ],
-                  ),
-                  Text('4.0 (50)'),
                 ],
               ),
             ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/auth/presentation/auth_controller.dart';
-import 'package:flutter_application_1/features/presentation/widgets/login_card.dart';
+import 'package:flutter_application_1/features/login/presentation/widgets/login_card.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,9 +30,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         email: email,
         password: pass,
       );
+      if(!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           content: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -54,6 +55,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
       );
       await Future.delayed(const Duration(seconds: 3));
+      if(!mounted) return;
       context.go('/home');
     } 
     catch(e) {

@@ -114,6 +114,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: nameController,
                           decoration: InputDecoration(
                             labelText: 'Nombre',
+                            hintText: 'Nombre',
                             prefixIcon: Icon(Icons.person, color: AppColors.primary,),
                           ),
                           validator: (value) {
@@ -130,6 +131,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
+                            labelText: 'Correo electrónico',
                             hintText: 'Correo electrónico',
                             prefixIcon: Icon(Icons.mail, color: AppColors.primary,),
                           ),
@@ -154,6 +156,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             FilteringTextInputFormatter.digitsOnly,
                           ],
                           decoration: InputDecoration(
+                            labelText: 'Télefono',
                             hintText: 'Télefono',
                             prefixIcon: Icon(Icons.phone, color: AppColors.primary,)
                           ),
@@ -168,6 +171,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: passwordController,
                           decoration: InputDecoration(
+                            labelText: 'Contraseña',
                             hintText: 'Contraseña',
                             prefixIcon: Icon(
                               Icons.lock,

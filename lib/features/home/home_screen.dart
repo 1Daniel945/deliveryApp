@@ -5,10 +5,11 @@ import 'package:flutter_application_1/features/home/presentation/widgets/categor
 import 'package:flutter_application_1/features/restaurants/data/datasources/restaurant_datasource.dart';
 import 'package:flutter_application_1/features/restaurants/data/models/restaurant_model.dart';
 import 'package:flutter_application_1/features/restaurants/presentation/widgets/restaurant_card.dart';
+import 'package:flutter_application_1/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/features/presentation/widgets/custom_card.dart';
-import 'package:flutter_application_1/features/presentation/widgets/select_directions.dart';
+import 'package:flutter_application_1/features/presentation/widgets/select_locations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -31,7 +32,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> loadRestaurants() async {
     try {
-      final data = RestaurantDatasource();
+      final data = RestaurantDatasource(supabase);
       final result = await data.getRestaurants();
       setState(() {
         restaurants = result;
@@ -85,7 +86,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         builder: (context) {
                           return Wrap(
                             children: [
-                              SelectDirection(),
+                              SelectLocations(),
                             ],
                           );
                         },
@@ -352,9 +353,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     final openMinutes = int.parse(restaurant.openTime.substring(3, 5));
                                     return GestureDetector(
                                       onTap: () {
-                                        context.push('restaurantScreen');
+                                        context.push('/restaurantScreen/${restaurant.id}');
                                       },
-                                      child:  RestaurantCard(
+                                      child: RestaurantCard(
                                         name: restaurant.name, 
                                         bannerUrl: restaurant.urlBanner, 
                                         logoUrl: restaurant.urlLogo, 
@@ -370,6 +371,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 20,),
                             /*SizedBox(
                               child: SingleChildScrollView(
                                 scrollDirection: .vertical,

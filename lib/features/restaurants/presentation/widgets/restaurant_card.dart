@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/restaurants/presentation/providers/favorite_restaurant_notifier.dart';
-import 'package:flutter_application_1/features/restaurants/presentation/providers/restaurant_provider.dart';
+import 'package:flutter_application_1/features/restaurants/presentation/providers/restaurant_categories_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 //import 'package:flutter_application_1/features/presentation/widgets/button_widget.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
-class SelectDirection extends StatelessWidget {
-  const SelectDirection({super.key});
+import 'package:go_router/go_router.dart';
+class SelectLocations extends StatelessWidget {
+  const SelectLocations({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +77,9 @@ class SelectDirection extends StatelessWidget {
             icon: Icon(Icons.add_location_rounded), 
             color: AppColors.primary,
             colorIcon: Colors.black, 
-            onTap: (){}
+            onTap: () {
+              context.push('/addLocations');
+            }
           ),
           SizedBox(height: 4),
           ButtonWidget1(

@@ -1,24 +1,22 @@
-import 'package:flutter_application_1/features/restaurants/data/datasources/restaurant_categories_datasource.dart';
-import 'package:flutter_application_1/features/restaurants/data/respositories/restaurant_catagories_repository.dart';
-import 'package:flutter_application_1/features/restaurants/domain/entities/restaurant_categories_entity.dart';
-import 'package:flutter_application_1/features/restaurants/domain/repositories/restaurant_categories_repository.dart';
-import 'package:flutter_application_1/features/restaurants/domain/usecases/get_restaurant_categories.dart';
+import 'package:flutter_application_1/features/restaurants/data/datasources/restaurant_datasource.dart';
+import 'package:flutter_application_1/features/restaurants/data/models/restaurant_model.dart';
+import 'package:flutter_application_1/features/restaurants/data/respositories/restaurant_repository.dart';
+import 'package:flutter_application_1/features/restaurants/domain/repositories/restaurant_repository.dart';
+import 'package:flutter_application_1/features/restaurants/domain/usecases/get_especific_restaurant.dart';
+import 'package:flutter_application_1/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-final restaurantCategoriesDataSourceProvider = Provider<RestaurantcategoriesDatasource>((ref) {
-  return RestaurantcategoriesDatasource(Supabase.instance.client);
+final SpecificRestaurantDataSourceProvider = Provider<RestaurantDatasource>((ref) {
+  return RestaurantDatasource(supabase);
 }); 
 
-final restaurantCategoriesRepositoryProvider = Provider<RestaurantCategoriesRepository>((ref) {
-  return RestaurantcatagoriesRepositoryImp(
-    ref.read(restaurantCategoriesDataSourceProvider),
+final SpecificRestaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
+  return RestaurantRepositoryImp(
+    ref.read(SpecificRestaurantDataSourceProvider),
   );
 });
 
-final restaurantCategoriesProvider = FutureProvider.autoDispose.family<List<RestaurantcategoriesEntity>, String>((ref, restaurantId) async {
-  final useCase = GetRestaurantCategories(ref.read(restaurantCategoriesRepositoryProvider));
-  
-  // ¡Aquí está la clave! Le pasamos el restaurantId que recibe el family
+final SpecificRestaurantProvider = FutureProvider.autoDispose.family<RestaurantModel?, String>((ref, restaurantId) async {
+  final useCase = GetSpecificRestaurant(ref.read(SpecificRestaurantRepositoryProvider));
   return await useCase(restaurantId); 
 });

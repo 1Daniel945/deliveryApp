@@ -155,16 +155,19 @@ class _LoginCardState extends ConsumerState<LoginCard>{
           const SizedBox(height: 4),
           Row(
             children: [
-              IconButton(
+              TextButton(
                 onPressed: () {},
-                icon: const Text('Olvidaste tu contraseña'),
+                child: const Text('Olvidaste tu contraseña', style: TextStyle(color: Colors.white),),
               ),
               const Spacer(),
-              IconButton(
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.amber,
+                ),
                 onPressed: () {
                   context.push('/register');
                 }, 
-                icon: const Text('Registrarse')
+                child: const Text('Registrarse', style: TextStyle(color: Colors.white),),
               ),
             ],
           ),
