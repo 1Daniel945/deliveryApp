@@ -15,9 +15,18 @@ final productsDatasourceProvider = Provider<ProductsDatasource>((ref) {
 final restaurantMenuProvider = FutureProvider.family<List<ProductModel>, String>((ref, restaurantId) async {
   final dataSource = ref.read(productsDatasourceProvider);
   final rawData = await dataSource.getRestaurantMenu(restaurantId);
-  print('La respuesta de hacer la consulta fue: $rawData');
   final List<ProductModel> products = rawData.map((mp) {
     return ProductModel.fromJson(mp);
   }).toList();
   return products;
+});
+
+final categoriesProductsProvider = Provider.family<Map<String, List<ProductModel>>, String>((ref, restaurantId) {
+  final menuAsync = ref.watch(restaurantMenuProvider(restaurantId));
+  final products = menuAsync.value ?? [];
+  final Map<String, List<ProductModel>> grouped = {};
+  for(final product in products) {
+    grouped.putIfAbsent(product.categoryName, ()=> <ProductModel>[]).add(product);
+  }
+  return grouped;
 });

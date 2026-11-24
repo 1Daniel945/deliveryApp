@@ -4,6 +4,7 @@ class ProductEntity {
   final String id;
   final String urlImage;
   final String productName;
+  final String categoryName;
   final String productDescription;
   final int productPrice;
   final List<String> ingredients;
@@ -13,6 +14,7 @@ class ProductEntity {
     required this.id,
     required this.urlImage,
     required this. productName,
+    required this.categoryName,
     required this.productDescription,
     required this.productPrice,
     required this.ingredients,

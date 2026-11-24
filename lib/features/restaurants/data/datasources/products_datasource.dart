@@ -50,16 +50,10 @@ class ProductsDatasource {
             final ing = Map<String, dynamic>.from(rawIng as Map);
             return ing['ingredient_name']?.toString() ?? '';
           })
-          .where((name) => name.isNotEmpty).join(',');
+          .where((name) => name.isNotEmpty).join(', ');
         final extras = product['extra_ingredients'] as List<dynamic>? ?? [];
-        final extrasList = extras
-          .map((rawExtras) {
-            final extra = Map<String, dynamic>.from(rawExtras as Map);
-            final extraName = extra['extra_name']?.toString() ?? '';
-            final extraPrice = extra['extra_price'] ?? 0;
-            return '$extraName(\$$extraPrice)';
-          }).join(',');
         flattenedList.add({
+          'id': product['id'],
           'restaurant_name': restaurantName,
           'category_name': categoryName,
           'url_image_product': product['url_image_product'],
@@ -67,10 +61,11 @@ class ProductsDatasource {
           'product_description': product['product_description'],
           'product_price': product['product_price'],
           'ingredients': ingredientList,
-          'extras': extrasList,
+          'extras': extras,
         });
       }
     }
+    //print('La respuesta plana es xddddd: $flattenedList');
     return flattenedList;
   } 
 }

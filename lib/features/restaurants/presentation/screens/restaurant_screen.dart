@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/theme/app_colors.dart';
 import 'package:flutter_application_1/features/presentation/widgets/button_widget1.dart';
+import 'package:flutter_application_1/features/restaurants/data/models/extras_model.dart';
 import 'package:flutter_application_1/features/restaurants/presentation/providers/products_provider.dart';
 import 'package:flutter_application_1/features/restaurants/presentation/widgets/delivery_metrics.dart';
 import 'package:flutter_application_1/features/restaurants/domain/entities/menu_categories_entity.dart';
@@ -29,6 +30,19 @@ class RestaurantScreen extends ConsumerWidget {
     final currentRestaurant = ref.watch(SpecificRestaurantProvider(restaurantId));
     final restaurnatName = currentRestaurant.value?.name ?? '';
     final List<MenuCategoriesEntity> categoriesList = categories.toList();
+    /*final Map<String, List<ProductModel>>categoriesProductos = {};
+    for(final product in products) {
+      categoriesProductos.putIfAbsent(product.categoryName, ()=>[]).add(product);
+    }
+    categoriesProductos.entries.forEach((MapEntry<String, List<ProductModel>> entry) {
+      final String categoryName = entry.key;
+      final List<ProductModel> items = entry.value;
+      debugPrint('$categoryName:');
+      for(final name in items) {
+        debugPrint(name.productName);
+      }
+    });*/
+    final mp = ref.watch(categoriesProductsProvider(restaurantId));
     return Scaffold(
       body: SafeArea(
         child: Skeletonizer(
@@ -128,7 +142,7 @@ class RestaurantScreen extends ConsumerWidget {
                                         ),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -173,12 +187,92 @@ class RestaurantScreen extends ConsumerWidget {
                     SliverPersistentHeader(
                       delegate: _CategoryHeaderDelegate(categories: categoriesList)
                     ),
-                    SliverGrid(
+                    products.isEmpty ? SliverToBoxAdapter(
+                      child: Center(
+                        child: Text(
+                          'Aún no hay productos', 
+                          style: TextStyle(
+                            fontSize: 18, 
+                            fontWeight: .bold,
+                          ),
+                        ),
+                      ),
+                    ) : 
+                    SliverList.builder(
+                      itemCount: categories.length,
+                      itemBuilder: (context, index) {
+                        final items = mp[categories[index].categoryName] ?? [];
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              Text(
+                                categories[index].categoryName,
+                                style: TextStyle(
+                                  fontWeight: .bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 16,),
+                              GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 0,
+                                  crossAxisSpacing: 10,
+                                  childAspectRatio: 0.57,
+                                ),
+                                itemCount: items.length,
+                                itemBuilder: (context, indexP) => Container(
+                                /*margin: index & 1 == 0
+                                    ? EdgeInsets.fromLTRB(10, 5, 5, 5)
+                                    : EdgeInsets.fromLTRB(5, 5, 10, 5),*/
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFF1E2329),
+                                      Color(0xFF15191F),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: .circular(20),
+                                  border: Border.all(
+                                    color: const Color(0xFF3A3F46),
+                                    width: 1,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black,
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 5),
+                                    ),
+                                  ],
+                                ), 
+                                child: Product(
+                                    productName: items[indexP].productName, 
+                                    productDescription: items[indexP].productDescription, 
+                                    urlImage: items[indexP].urlImage, 
+                                    productPrice: items[indexP].productPrice, 
+                                    ingredients: items[indexP].ingredients, 
+                                    extras: items[indexP].extras, 
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    )
+                    /*SliverGrid(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 0,
                         crossAxisSpacing: 0,
-                        childAspectRatio: 0.68,
+                        childAspectRatio: 0.66,
                       ),
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
@@ -209,12 +303,20 @@ class RestaurantScreen extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                            child: Product(),
+                            child: Product(
+                              productName: products[index].productName,
+                              productDescription: products[index].productDescription,
+                              urlImage: products[index].urlImage,
+                              productPrice: products[index].productPrice,
+                              ingredients: products[index].ingredients,
+                              extras: products[index].extras,
+                            ),
                           );
                         },
-                        childCount: 10,
+                        childCount: products.length,
                       ),
                     ),
+                  */
                   ],
                 ),
               ),
@@ -227,8 +329,22 @@ class RestaurantScreen extends ConsumerWidget {
 }
 
 class Product extends StatelessWidget {
+
+  final String productName;
+  final String productDescription;
+  final String urlImage;
+  final int productPrice;
+  final List<String> ingredients;
+  final List<ExtrasModel>extras;
+
   const Product({
     super.key,
+    required this.productName,
+    required this.productDescription,
+    required this.urlImage,
+    required this.productPrice,
+    required this.ingredients,
+    required this.extras,
   });
 
   @override
@@ -242,11 +358,11 @@ class Product extends StatelessWidget {
           clipBehavior: .none,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(10),
               child: AspectRatio(
                 aspectRatio: 1.0,
                 child: Image.network(
-                  'https://i.ibb.co/v6tX7LB9/hamburguesa.webp',
+                  urlImage,
                   errorBuilder:
                       (context, error, stackTrace) {
                         return Container(
@@ -280,6 +396,8 @@ class Product extends StatelessWidget {
               right: 2,
               bottom: -10,
               child: Container(
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(50),
@@ -329,7 +447,7 @@ class Product extends StatelessWidget {
                                         child: AspectRatio(
                                           aspectRatio: 16 / 9,
                                           child: Image.network(
-                                            'https://i.ibb.co/wrdsMjYm/images-4.jpg',
+                                            urlImage,
                                             errorBuilder: (context, error, stackTrace) {
                                               return Container(
                                                 color: Colors.grey[900],
@@ -361,15 +479,15 @@ class Product extends StatelessWidget {
                                       Row(
                                         mainAxisAlignment: .spaceBetween,
                                         children: [
-                                          const Text(
-                                            'Hamburguesa',
+                                          Text(
+                                            productName,
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: .bold,
                                             ),
                                           ),
                                           Text(
-                                            '\$45 MXN',
+                                            '\$$productPrice MXN',
                                             style: TextStyle(
                                               color: AppColors.primary,
                                               fontWeight: .bold,
@@ -378,8 +496,8 @@ class Product extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const Text(
-                                        'Hamburguesa doble carne con papas y refresco',
+                                      Text(
+                                        productDescription,
                                         style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: .normal,
@@ -400,11 +518,11 @@ class Product extends StatelessWidget {
                                           ListView.builder(
                                             shrinkWrap: true,
                                             physics: const NeverScrollableScrollPhysics(),
-                                            itemCount: 5,
+                                            itemCount: ingredients.length,
                                             itemBuilder: (context, index) {
                                               return CheckboxListTile(
                                                 title: Text(
-                                                  'Example ${index + 1}',
+                                                  ingredients[index],
                                                   style: const TextStyle(color: Colors.white),
                                                 ),
                                                 checkColor: Colors.black,
@@ -417,7 +535,6 @@ class Product extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const Divider(endIndent: 5, indent: 5,),
                                       const Text(
                                         'Extras',
                                         style: TextStyle(
@@ -428,10 +545,10 @@ class Product extends StatelessWidget {
                                       ListView.builder(
                                         shrinkWrap: true,
                                         physics: const NeverScrollableScrollPhysics(),
-                                        itemCount: 5,
+                                        itemCount: extras.length,
                                         itemBuilder: (context, index) {
                                           return CheckboxListTile(
-                                            title: Text('Capsu', style: TextStyle(color: Colors.white),),
+                                            title: Text(extras[index].extraName, style: TextStyle(color: Colors.white),),
                                             checkColor: Colors.black,
                                             fillColor: WidgetStateProperty.all(Colors.amberAccent),
                                             checkboxShape: CircleBorder(),
@@ -499,7 +616,9 @@ class Product extends StatelessWidget {
                                               icon: Icon(Icons.add_location), 
                                               color: AppColors.primary, 
                                               colorIcon: Colors.black, 
-                                              onTap: () {},
+                                              onTap: () {
+
+                                              },
                                             ),
                                           ),
                                         ],
@@ -511,37 +630,43 @@ class Product extends StatelessWidget {
                             );
                           }
                         );
-                        
                       },
                     );
                   },
-                  icon: Icon(Icons.add),
+                  iconSize: 18,
+                  icon: Icon(Icons.add, fontWeight: .bold,),
                   color: Colors.black,
                 ),
               ),
             ),
           ],
         ),
+        const SizedBox(height: 8,),
         Text(
-          'Burger King',
+          productName,
           style: TextStyle(
             fontWeight: .bold,
             color: Colors.white,
           ),
+          maxLines: 1,
+          overflow: .ellipsis,
         ),
+        const SizedBox(height: 6,),
         Text(
-          'Jugosa hamburgesa con doble carne xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+          productDescription,
           overflow: .ellipsis,
           maxLines: 2,
           style: TextStyle(
             fontWeight: .normal,
-            color: Colors.white,
+            color: Colors.white70,
           ),
         ),
+        const SizedBox(height: 4,),
         Text(
-          '\$45 MXM',
+          '\$$productPrice MXN',
           style: TextStyle(
             fontWeight: .bold,
+            fontSize: 18,
             color: AppColors.primary,
           ),
         ),
@@ -579,7 +704,9 @@ class _CategoryHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),*/
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              //Actualizar donde se coloca el scroll del boton de una categoria 
+            },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 250),
               curve: Curves.easeInOut,
@@ -595,7 +722,8 @@ class _CategoryHeaderDelegate extends SliverPersistentHeaderDelegate {
                   Text(
                     categories[index].categoryName,
                     style: TextStyle(
-
+                      fontSize: 16,
+                      fontWeight: .normal,
                     ),
                   ),
                 ],
